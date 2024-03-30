@@ -5,7 +5,7 @@ from datetime import datetime
 import s3fs 
 
 def run_twitter_etl():
-    csv_file_path = "s3://ali-airflow-bucket-twitter-data/tweets.csv"
+    csv_file_path = "YOUR_S3_URL"
     try:
         df = pd.read_csv(csv_file_path)
         datetime_format = "%d/%m/%Y %H:%M"
@@ -14,7 +14,7 @@ def run_twitter_etl():
         df['date'] = df['date_time'].dt.date
         df['time'] = df['date_time'].dt.time
         selected_columns_df = df[['author', 'content', 'date', 'time', 'number_of_likes', 'number_of_shares']]
-        selected_columns_df.to_csv("s3://ali-airflow-bucket-twitter-data/Modified_Tweets.csv")
+        selected_columns_df.to_csv("YOUR_S3_URL")
     except FileNotFoundError:
         print(f"Error: File '{csv_file_path}' not found.")
     except Exception as e:
